@@ -24,4 +24,22 @@ public class PointTest {
         double out = point1.distance(point2);
         Assert.assertEquals(expected, out, 0.01);
     }
+
+    @Test
+    public void whenIn3dPoint1EqualsPoint2ThenZero() {
+        Point point1 = new Point(3, 4, 1);
+        Point point2 = new Point(3, 4, 1);
+        double expected = 0;
+        double out = point1.distance3d(point2);
+        Assert.assertEquals(expected, out, 0.01);
+    }
+
+    @Test
+    public void whenIn3dPoint1NotEqualsPoint2ThenMoreThanZero() {
+        Point point1 = new Point(1, 4, 2);
+        Point point2 = new Point(2, -1, 5);
+        double expected = 5.92;
+        double out = point1.distance3d(point2);
+        Assert.assertEquals(expected, out, 0.01);
+    }
 }
