@@ -29,4 +29,13 @@ public class MaxTest {
         int result = Max.max(left, right);
         assertThat(result, is(left));
     }
+
+    @Test
+    public void maxWithThreeNumbers() {
+        int first = 3;
+        int second = 5;
+        int third = -1;
+        int result = Max.max(first, second, third);
+        assertThat(result, is(second));
+    }
 }
