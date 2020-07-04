@@ -38,4 +38,14 @@ public class MaxTest {
         int result = Max.max(first, second, third);
         assertThat(result, is(second));
     }
+
+    @Test
+    public void maxWithFourNumbers() {
+        int first = 4;
+        int second = 5;
+        int third = -13;
+        int fourth = 12;
+        int result = Max.max(first, second, third, fourth);
+        assertThat(result, is(fourth));
+    }
 }
