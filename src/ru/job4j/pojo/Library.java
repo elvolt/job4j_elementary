@@ -18,12 +18,12 @@ public class Library {
         Book tmp = books[3];
         books[3] = books[0];
         books[0] = tmp;
-        System.out.println("\nREPLACE BOOKS");
+        System.out.println(System.lineSeparator() + "REPLACE BOOKS");
         for (int i = 0; i < books.length; i++) {
             Book book = books[i];
             System.out.println(book.getName() + ", pages: " + book.getPages());
         }
-        System.out.println("\nCLEAN CODE BOOKS");
+        System.out.println(System.lineSeparator() + "CLEAN CODE BOOKS");
         for (int i = 0; i < books.length; i++) {
             Book book = books[i];
             if (book.getName().equals("Clean Code")) {
