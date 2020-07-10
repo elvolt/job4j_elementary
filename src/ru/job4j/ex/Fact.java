@@ -2,11 +2,10 @@ package ru.job4j.ex;
 
 public class Fact {
     public static void main(String[] args) {
-        Fact fact = new Fact();
-        System.out.println(fact.calc(0));
+        System.out.println(Fact.calc(0));
     }
 
-    public int calc(int n) {
+    public static int calc(int n) {
         if (n < 0) {
             throw new IllegalArgumentException("n shouldn't be negative");
         }
