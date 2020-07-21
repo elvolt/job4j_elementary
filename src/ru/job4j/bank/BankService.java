@@ -12,9 +12,15 @@ public class BankService {
         users.putIfAbsent(user, new ArrayList<Account>());
     }
 
-    public void addAccount(String passport, Account account) {
+    public void addAccount(String passport, Account account) throws Exception {
         User user = findByPassport(passport);
+        if (user == null) {
+            throw new UserNotFoundException("User with passport " + passport + " not found");
+        }
         List<Account> accounts = users.get(user);
+        if (accounts.contains(account)) {
+            throw new AccountException("You already have " + account.getRequisite() + "account");
+        }
         accounts.add(account);
     }
 
@@ -39,6 +45,7 @@ public class BankService {
         for (Account account : accounts) {
             if (account.getRequisite().equals(requisite)) {
                 result = account;
+                break;
             }
         }
         return result;

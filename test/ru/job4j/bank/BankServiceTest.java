@@ -16,7 +16,7 @@ public class BankServiceTest {
     }
 
     @Test
-    public void whenEnterInvalidPassport() {
+    public void whenEnterInvalidPassport() throws Exception {
         User user = new User("3434", "Petr Arsentev");
         BankService bank = new BankService();
         bank.addUser(user);
@@ -25,7 +25,7 @@ public class BankServiceTest {
     }
 
     @Test
-    public void addAccount() {
+    public void addAccount() throws Exception {
         User user = new User("3434", "Petr Arsentev");
         BankService bank = new BankService();
         bank.addUser(user);
@@ -33,8 +33,29 @@ public class BankServiceTest {
         assertThat(bank.findByRequisite("3434", "5546").getBalance(), is(150D));
     }
 
+    @Test(expected = UserNotFoundException.class)
+    public void addAccountWhenUserNotFound() throws Exception {
+        User user1 = new User("1234", "Ivan Ivanov");
+        User user2 = new User("4321", "Petr Petrov");
+        BankService bank = new BankService();
+        bank.addUser(user1);
+        bank.addUser(user2);
+        bank.addAccount("2468", new Account("5546", 150D));
+    }
+
+    @Test(expected = AccountException.class)
+    public void addAccountWhenAccountIsAlreadyHas() throws Exception {
+        User user1 = new User("1234", "Ivan Ivanov");
+        User user2 = new User("4321", "Petr Petrov");
+        BankService bank = new BankService();
+        bank.addUser(user1);
+        bank.addUser(user2);
+        bank.addAccount(user1.getPassport(), new Account("5546", 150D));
+        bank.addAccount(user1.getPassport(), new Account("5546", 75D));
+    }
+
     @Test
-    public void transferMoney() {
+    public void transferMoney() throws Exception {
         User user = new User("3434", "Petr Arsentev");
         BankService bank = new BankService();
         bank.addUser(user);
