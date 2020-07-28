@@ -1,6 +1,9 @@
 package ru.job4j.stream;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Student {
 
@@ -42,4 +45,29 @@ public class Student {
         return Objects.hash(score, surname);
     }
 
+    @Override
+    public String toString() {
+        return "Student{"
+                + "score=" + score
+                + ", surname='" + surname + '\''
+                + '}';
+    }
+
+    public static void main(String[] args) {
+        List<Student> students = Arrays.asList(
+                new Student("Ivanov", 40),
+                new Student("Petrov", 60),
+                new Student("Sidorov", 70),
+                new Student("Smirnov", 85)
+        );
+        System.out.println(
+                students.stream()
+                        .collect(
+                                Collectors.toMap(
+                                        Student::getSurname,
+                                        student -> student
+                                )
+                        )
+        );
+    }
 }
