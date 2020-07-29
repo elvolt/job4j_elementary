@@ -25,30 +25,22 @@ public class BankService {
     }
 
     public User findByPassport(String passport) {
-        User result = null;
-        for (User user : users.keySet()) {
-            if (user.getPassport().equals(passport)) {
-                result = user;
-                break;
-            }
-        }
-        return result;
+        return users.keySet().stream()
+                .filter(user -> user.getPassport().equals(passport))
+                .findFirst()
+                .orElse(null);
     }
 
     public Account findByRequisite(String passport, String requisite) {
-        Account result = null;
         User user = findByPassport(passport);
         if (user == null) {
             return null;
         }
         List<Account> accounts = users.get(user);
-        for (Account account : accounts) {
-            if (account.getRequisite().equals(requisite)) {
-                result = account;
-                break;
-            }
-        }
-        return result;
+        return accounts.stream()
+                .filter(account -> account.getRequisite().equals(requisite))
+                .findFirst()
+                .orElse(null);
     }
 
     public boolean transferMoney(String srcPassport, String srcRequisite,
