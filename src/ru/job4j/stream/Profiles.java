@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Profiles {
-    Comparator<Address> comparator = Comparator.comparing(Address::getCity);
+    private Comparator<Address> comparator = Comparator.comparing(Address::getCity);
 
-    List<Address> collect(List<Profile> profiles) {
+    public List<Address> collect(List<Profile> profiles) {
         return profiles.stream()
                 .map(Profile::getAddress)
                 .sorted(comparator)

@@ -8,6 +8,17 @@ public class Address {
     private int home;
     private int apartment;
 
+    public Address(String city) {
+        this.city = city;
+    }
+
+    public Address(String city, String street, int home, int apartment) {
+        this.city = city;
+        this.street = street;
+        this.home = home;
+        this.apartment = apartment;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -34,5 +45,15 @@ public class Address {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", home=" + home +
+                ", apartment=" + apartment +
+                '}';
     }
 }
