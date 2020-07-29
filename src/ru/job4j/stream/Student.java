@@ -52,22 +52,4 @@ public class Student {
                 + ", surname='" + surname + '\''
                 + '}';
     }
-
-    public static void main(String[] args) {
-        List<Student> students = Arrays.asList(
-                new Student("Ivanov", 40),
-                new Student("Petrov", 60),
-                new Student("Sidorov", 70),
-                new Student("Smirnov", 85)
-        );
-        System.out.println(
-                students.stream()
-                        .collect(
-                                Collectors.toMap(
-                                        Student::getSurname,
-                                        student -> student
-                                )
-                        )
-        );
-    }
 }
