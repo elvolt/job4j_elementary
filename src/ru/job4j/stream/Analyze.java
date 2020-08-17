@@ -31,22 +31,11 @@ public class Analyze {
     }
 
     public static List<Tuple> averageScoreByPupil(Stream<Pupil> stream) {
-        List<Pupil> pupils = stream.collect(Collectors.toList());
-        int studentsCount = pupils.size();
-        List<Subject> subjects = pupils.stream()
-                .flatMap(pupil -> pupil.getSubjects().stream())
+        return stream.flatMap(pupil -> pupil.getSubjects().stream())
+                .collect(Collectors.groupingBy(Subject::getName, Collectors.averagingDouble(Subject::getScore)))
+                .entrySet().stream()
+                .map(entry -> new Tuple(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
-        Stream<String> uniqSubjectsNames = subjects.stream()
-                .map(Subject::getName)
-                .distinct();
-
-        return uniqSubjectsNames.map(name -> {
-                  double scoresSum = subjects.stream()
-                          .filter(subject -> subject.getName().equals(name))
-                          .mapToInt(Subject::getScore)
-                            .sum();
-                  return new Tuple(name, scoresSum / studentsCount);
-                }).collect(Collectors.toList());
     }
 
     public static Tuple bestStudent(Stream<Pupil> stream) {
@@ -61,19 +50,10 @@ public class Analyze {
     }
 
     public static Tuple bestSubject(Stream<Pupil> stream) {
-        List<Subject> subjects = stream.flatMap(
-                pupil -> pupil.getSubjects().stream()
-        ).collect(Collectors.toList());
-        Stream<String> uniqSubjectsNames = subjects.stream()
-                .map(Subject::getName)
-                .distinct();
-        Optional<Tuple> max = uniqSubjectsNames.map(n -> {
-            double scoresSum = subjects.stream()
-                    .filter(subject -> subject.getName().equals(n))
-                    .mapToInt(Subject::getScore)
-                    .sum();
-            return new Tuple(n, scoresSum);
-        }).max(Comparator.comparingDouble(Tuple::getScore));
-        return max.orElse(null);
+        return stream.flatMap(pupil -> pupil.getSubjects().stream())
+                .collect(Collectors.groupingBy(Subject::getName, Collectors.summingDouble(Subject::getScore)))
+                .entrySet().stream()
+                .map(entry -> new Tuple(entry.getKey(), entry.getValue()))
+                .max(Comparator.comparingDouble(Tuple::getScore)).orElse(null);
     }
 }
