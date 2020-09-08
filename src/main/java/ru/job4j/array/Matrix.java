@@ -1,5 +1,8 @@
 package ru.job4j.array;
 
+import java.io.*;
+import java.util.Arrays;
+
 public class Matrix {
     public static int[][] multiple(int size) {
         int[][] table = new int[size][size];
@@ -9,5 +12,18 @@ public class Matrix {
             }
         }
         return table;
+    }
+
+    public static void writeToFile(int[][] table) {
+        try (FileOutputStream out = new FileOutputStream("result.txt")) {
+            out.write(Arrays.deepToString(table).getBytes());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        int[][] table = multiple(9);
+        Matrix.writeToFile(table);
     }
 }
